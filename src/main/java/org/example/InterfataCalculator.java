@@ -1,12 +1,9 @@
 package org.example;
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 import java.awt.Color;
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -50,6 +47,21 @@ public class InterfataCalculator {
                 }
             }
         });
+    }
+    //metoda returneazaPolinoame o folosesc pt a testa daca au fost introduse corect , si in cazul in care sunt corecte apelez functia din clasa RegexParseString pt creea treemapul polinoamelor
+    public void returneazaPolinoame(String a, String b){
+        try{
+            pol1=RegexParseString.stringTotree(a);
+        }catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Polinomul 1 nu a fost introdus corect");
+            throw new RuntimeException(ex);
+        } ;
+        try {
+            pol2 = RegexParseString.stringTotree(b);
+        }catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Polinomul 2 nu a fost introdus corect");
+            throw new RuntimeException(ex);
+        } ;
     }
 
     /**
@@ -209,6 +221,7 @@ public class InterfataCalculator {
         frame.getContentPane().add(butonReset);
 
         ///action perfored for buttons
+        //toate functioneaza pe acelasi principiu : se apeleaza fctia returneazaPolinoame , apoi se apeleaza operatia dorita din clasa polinom si pune toStringul rezultatului in textField ul pt rezultat
 
         butonAdunare.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -281,16 +294,5 @@ public class InterfataCalculator {
 
 
     }
-    public void returneazaPolinoame(String a, String b){
-        try{
-            pol1=RegexParseString.stringTotree(a);
-        }catch (Exception ex) {
-            throw new RuntimeException(ex);
-        } ;
-        try {
-            pol2 = RegexParseString.stringTotree(b);
-        }catch (Exception ex) {
-            throw new RuntimeException(ex);
-        } ;
-    }
+
 }
