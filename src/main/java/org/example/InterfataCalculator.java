@@ -17,7 +17,7 @@ import java.util.TreeMap;
 
 public class InterfataCalculator {
 
-    private JFrame frame;
+    public JFrame frame;
     private JTextField textPol2;
     private JTextField textRezultat;
 
@@ -36,18 +36,7 @@ public class InterfataCalculator {
     /**
      * Launch the application.
      */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    InterfataCalculator window = new InterfataCalculator();
-                    window.frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+
     //metoda returneazaPolinoame o folosesc pt a testa daca au fost introduse corect , si in cazul in care sunt corecte apelez functia din clasa RegexParseString pt creea treemapul polinoamelor
     public void returneazaPolinoame(String a, String b){
         try{
@@ -201,6 +190,7 @@ public class InterfataCalculator {
         textRezultat.setForeground(new Color(217, 249, 253));
         textRezultat.setBackground(Color.BLACK);
         textRezultat.setBounds(163, 352, 251, 28);
+        textRezultat.setEditable(false);
         frame.getContentPane().add(textRezultat);
 
         JLabel lblOperatiiPeUn = new JLabel("Operatii pe un polinom");
@@ -263,11 +253,17 @@ public class InterfataCalculator {
         });
         butonImpartire.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                returneazaPolinoame(textPol1.getText(),textPol2.getText());
-                polinom1.setPolinom(pol1);
-                polinom2.setPolinom(pol2);
-                rest=rez.impartire(polinom1,polinom2);
-                textRezultat.setText(rez.toString()+ "   " + "Restul : " +rest.toString());
+                int ok=1;
+                returneazaPolinoame(textPol1.getText(), textPol2.getText());
+                if(textPol2.getText().equals("0")) {
+                   JOptionPane.showMessageDialog(null, "Nu se poate imparti ceva la 0 . Va rugam introduceti alt Polinom2");
+                    ok = 0;
+                }if(ok==1) {
+                    polinom1.setPolinom(pol1);
+                    polinom2.setPolinom(pol2);
+                    rest = rez.impartire(polinom1, polinom2);
+                    textRezultat.setText("Rezultat : " + rez.toString() + "   " + "Restul : " + rest.toString());
+                }
             }
         });
         butonDerivare.addActionListener(new ActionListener() {
@@ -277,6 +273,8 @@ public class InterfataCalculator {
                     polinom1.setPolinom(pol1);
                     rez.derivare(polinom1);
                     textRezultat.setText(rez.toString());
+                }else {
+                    JOptionPane.showMessageDialog(null, "O sa se deriveze polinomul 1 . Nu introduceti nimic la polinomul 2");
                 }
             }
         });
@@ -287,6 +285,8 @@ public class InterfataCalculator {
                     polinom1.setPolinom(pol1);
                     rez.integrare(polinom1);
                     textRezultat.setText(rez.toString() + " + C");
+                }else {
+                    JOptionPane.showMessageDialog(null, "O sa se integreze polinomul 1 . Nu introduceti nimic la polinomul 2");
                 }
             }
         });
