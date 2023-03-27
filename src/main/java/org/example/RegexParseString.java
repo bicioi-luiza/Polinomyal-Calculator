@@ -20,7 +20,7 @@ public class RegexParseString {
     return coeficient;}
 
     public static NavigableMap stringTotree(String s) throws Exception {
-        Matcher matcher;
+        Matcher matcher;  Matcher matcherGresit;
         Pattern pattern = Pattern.compile("([+-]?(?:(?:\\d+x\\^\\d+)|(?:x\\^\\d+)|(?:\\d+x)|(?:\\d+)|(?:x)))");
         NavigableMap<Integer,Double> polinom=new TreeMap<Integer,Double>();
         matcher = pattern.matcher(s); int ok=0;
@@ -39,8 +39,9 @@ public class RegexParseString {
                     coeficient=1.0;
                 else coeficient=getCoefficient(parts[0]);
             } else {
-                coeficient = Double.parseDouble(matcher.group(1));
                 grad = 0;
+                coeficient = Double.parseDouble(matcher.group(1));
+
             }
             polinom.put(grad,coeficient);
             if(s.endsWith(matcher.group(1)))
